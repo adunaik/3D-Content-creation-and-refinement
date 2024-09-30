@@ -23,3 +23,17 @@ Source is plane and target is car and intermediate point clouds represent output
 
 ![car2car 001](https://github.com/user-attachments/assets/2aa6f603-fa9a-4f48-9896-8d021f4c8619)
 
+Source is car type1 and target is car type2 and intermediate point clouds represent output from that interpolation step, dataset used was shapenet rendered images.
+
+# Results from combining geometric style and semantic attributes.
+
+![chair_combined2 001](https://github.com/user-attachments/assets/fb3589b6-49e1-4d08-8b14-1e5f937d9789)
+
+
+Here we combine the geomtric style from chair 1 along with semantic attributes of chair 2 to generate a 3D point cloud with overall geometry as chair 1 and having semantics of chair 2.
+
+# Results from varying parameters of latent vector
+
+<img width="1124" alt="PlaneLen (1)" src="https://github.com/user-attachments/assets/e01b0c12-11f6-40ae-a90f-b1a0370403be">
+
+Here we vary the 5th dimension of the latent vector to observe changes in the length of the wings. (Red one) represents no varied parameter, hence no change in the length of the wings, while (Blue one) is with the 5th parameter varied to observe the change in the length of its wings.
