@@ -17,3 +17,6 @@ In this apporach we take two images, one as source and one as target, we perform
 
 ![Plane2car 002](https://github.com/user-attachments/assets/789eb998-8c49-4228-b480-3012868019b4)
 
+Source is plane and target is car and intermediate point clouds represent output from that interpolation step, dataset used was shapenet rendered images.
+
+# Results from Intra-class interpolation.
