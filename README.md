@@ -8,5 +8,6 @@ In this approach, we perform interpolation in the latent space between a source 
 
 # System architecture
 
+![_final_block_diagram _001](https://github.com/user-attachments/assets/c7025849-8b59-4a47-b1a4-00ac826167c7)
 
 
