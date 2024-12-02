@@ -1,0 +1,12 @@
+for t in range(11):  # t goes from 0 to 10 (inclusive)
+    # Normalize t to a range between 0 and 1
+    t_normalized = t / 10
+    
+    # Linear interpolation
+    feat3_linear = (1 - t_normalized) * feat + t_normalized * feat1
+    print(f"Linear interpolation (t={t_normalized:.1f}): {feat3_linear}")
+    
+    # Cosine interpolation
+    t_cos = (1 - np.cos(np.pi * t_normalized)) / 2
+    feat3_cosine = (1 - t_cos) * feat + t_cos * feat1
+    print(f"Cosine interpolation (t={t_normalized:.1f}): {feat3_cosine}")
