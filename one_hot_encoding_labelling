@@ -1,0 +1,125 @@
+import os
+import yaml
+from PIL import Image
+
+dataset_dir = '/data/CEVI/ShapeNet-Dataset/10_folders/'
+
+def concat_images(folder_path):
+    rendering_folder = os.path.join(folder_path, 'rendering')
+    images = ['00.png', '02.png', '04.png', '23.png']  # List of images to concatenate
+    concatenated_images = []
+
+    # Load and concatenate images horizontally
+    for image_name in images:
+        image_path = os.path.join(rendering_folder, image_name)
+        image = Image.open(image_path)
+        concatenated_images.append(image)
+
+    # Concatenate images horizontally
+    concatenated_width = sum(image.width for image in concatenated_images)
+    max_height = max(image.height for image in concatenated_images)
+    concatenated_image = Image.new('RGB', (concatenated_width, max_height))
+    x_offset = 0
+    for image in concatenated_images:
+        concatenated_image.paste(image, (x_offset, 0))
+        x_offset += image.width
+
+    return concatenated_image
+
+def create_custom_yaml_files(dataset_dir):
+    for folder_name in os.listdir(dataset_dir):
+        folder_path = os.path.join(dataset_dir, folder_name)
+        if os.path.isdir(folder_path):
+            concatenated_image = concat_images(folder_path)  # Concatenate images from the rendering folder
+            concatenated_image.show()  # Show concatenated image
+            yaml_file_path = os.path.join(folder_path, f"{folder_name}.yaml")
+            part_labels = {}  # Dictionary to store part labels
+            print(f"Enter part labels for folder {folder_name}:")
+            for part_name in ["legs", "back_rest", "seat", "arm_rest"]:
+                if part_name == "legs":
+                    print("LEGS:")
+                    print("1. No")
+                    print("2. Cantilever")
+                    print("3. Straight")
+                    print("4. Round")
+                    print("5. Rocking")
+                    print("6. Straight")
+                    choice = input("Select an option: ")
+                    if choice == "1":
+                        part_values = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                    elif choice == "2":
+                        part_values = [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]  
+                    elif choice == "3":
+                        part_values = [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]  
+                    elif choice == "4":
+                        part_values = [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0]  
+                    elif choice == "5":
+                        part_values = [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]  
+                    elif choice == "6":
+                        part_values = [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]  
+                    else:
+                        print("Invalid choice. Defaulting to No... Taking default as 0,0,0,0,0,0")
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]  # Default to No if invalid choice
+                # Add options for other part labels in a similar manner
+                elif part_name == "back_rest":
+                    print("BACK REST:")
+                    print("1. No")
+                    print("2. Stripped")
+                    print("3. Straight")
+                    print("4. Curved")
+                    print("5. Half-filled")
+                    choice = input("Select an option: ")
+                    if choice == "1":
+                        part_values = [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0]
+                    elif choice == "2":
+                        part_values = [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0]  
+                    elif choice == "3":
+                        part_values = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0]  
+                    elif choice == "4":
+                        part_values = [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]  
+                    elif choice == "5":
+                        part_values = [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0]  
+                    else:
+                        print("Invalid choice. Defaulting to No... Taking default as 0,0,0,0,0,0")
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] # Default to No if invalid choice
+                    # Add options for back_rest
+                elif part_name == "seat":
+                    print("SEAT:")
+                    # Add options for seat
+                    print("1. Flat")
+                    print("2. Round")
+                    print("3. Skirt")
+                    choice = input("Select an option: ")
+                    if choice == "1":
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0]
+                    elif choice == "2":
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]  
+                    elif choice == "3":
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0]  
+                    else:
+                        print("Invalid choice. Defaulting to No... Taking default as 0,0,0,0,0,0")
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] # Default to No if invalid choice
+                    
+                elif part_name == "arm_rest":
+                    print("ARM REST:")
+                    # Add options for arm_rest
+                    print("1. No")
+                    print("2. Straight")
+                    print("3. Curved")
+                    choice = input("Select an option: ")
+                    if choice == "1":
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0]
+                    elif choice == "2":
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]  
+                    elif choice == "3":
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]  
+                    else:
+                        print("Invalid choice. Defaulting to No... Taking default as 0,0,0,0,0,0")
+                        part_values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] # Default to No if invalid choice
+                part_labels[part_name] = part_values
+            concatenated_image.close()  # Close the concatenated image
+            with open(yaml_file_path, 'w') as file:
+                yaml.dump(part_labels, file, default_flow_style=False)
+            print(f"Created {yaml_file_path}")
+
+create_custom_yaml_files(dataset_dir)
