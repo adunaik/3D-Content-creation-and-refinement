@@ -1,5 +1,5 @@
 # 3D-Content-creation-and-refinement
-
+# Adi
 This repository focuses on generating diverse 3D point clouds from single-view 2D RGB images. The project utilizes a pretrained architecture known as 3DAttributeFlow to achieve this.
 
 # Introduction
